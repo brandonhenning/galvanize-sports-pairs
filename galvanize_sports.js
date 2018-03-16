@@ -2,42 +2,59 @@ var data = require("./objects");
 var inventory = data.inventory;
 var shoppingCart = data.shoppingCart;
 
+
 function findItemInShoppingCartById(itemId) {
-  //You code here
+    return shoppingCart.filter((item) => {
+        return item.itemId === itemId
+    })[0]
 }
 
 function findItemInInventoryById(itemId) {
-  //You code here
+    return inventory.filter((item) => {
+        return item.id === itemId
+    })[0]
 }
 
 function addItem(itemId, quantity){
-    // Your code here!
-    // Hint: use findItemInShoppingCartById and findItemInInventoryById
-    // to find the items before increasing/decreasing quantities
+    if (quantity > findItemInInventoryById(itemId).quantityAvailable) {
+        quantity = findItemInInventoryById(itemId).quantityAvailable
+    }
+    findItemInShoppingCartById(itemId).quantity += quantity
+    findItemInInventoryById(itemId).quantityAvailable -= quantity
 }
 
 function removeItem(itemId, quantity){
-    // Your code here!
+    if (quantity > findItemInShoppingCartById(itemId).quantity) {
+        quantity = findItemInShoppingCartById(itemId).quantity
+    }
+    findItemInShoppingCartById(itemId).quantity -= quantity
+    findItemInInventoryById(itemId).quantityAvailable += quantity
 }
 
 function getCheckoutSubtotal(){
     var checkoutSubtotal = 0.00;
-    // Your code here!
+    shoppingCart.forEach((item) => {
+        let itemSub = findItemInInventoryById(item.itemId)
+        checkoutSubtotal += (itemSub.price * item.quantity)
+    })
     return checkoutSubtotal;
 }
 
 function getTax(subtotal, rate){
     var tax = 0.00;
-    // Your code here!
+    tax += (subtotal * rate)
     return tax;
 }
 
 function getCheckoutTotal(){
     var TAX_RATE = 0.078;
     var checkoutTotal = 0.00;
-    // Your code here!
-    return checkoutTotal;
+    let subtotal = getCheckoutSubtotal()
+    checkoutTotal += (subtotal * TAX_RATE)
+    checkoutTotal += subtotal
+    return checkoutTotal.toFixed(2);
 }
+
 
 module.exports = {
     inventory,

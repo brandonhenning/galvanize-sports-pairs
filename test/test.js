@@ -17,12 +17,12 @@ describe("Functions should work", function() {
       assert.equal(galvanizeSports.findItemInShoppingCartById(15), galvanizeSports.shoppingCart[1], "Should find item 15 in shopping cart");
       assert.equal(galvanizeSports.findItemInShoppingCartById(18), galvanizeSports.shoppingCart[2], "Should find item 18 in shopping cart");
     });
-    xit("finds an item in the inventory by id", function () {
+    it("finds an item in the inventory by id", function () {
       assert.equal(galvanizeSports.findItemInInventoryById(10), galvanizeSports.inventory[0], "Should find item 10 in inventory");
       assert.equal(galvanizeSports.findItemInInventoryById(15), galvanizeSports.inventory[1], "Should find item 15 in inventory");
       assert.equal(galvanizeSports.findItemInInventoryById(18), galvanizeSports.inventory[2], "Should find item 18 in inventory");
     });
-    xit("adds an item to the shopping cart", function () {
+    it("adds an item to the shopping cart", function () {
       initializeData();
       galvanizeSports.addItem(10, 1);
       assert.equal(galvanizeSports.shoppingCart[0].quantity, 3, "Item 1 should be added to the shopping cart");
@@ -31,7 +31,7 @@ describe("Functions should work", function() {
       galvanizeSports.addItem(18, 1);
       assert.equal(galvanizeSports.shoppingCart[2].quantity, 3, "Items 3 should be added to the shopping cart");
     });
-    xit("updates the inventory", function () {
+    it("updates the inventory", function () {
       initializeData();
       galvanizeSports.addItem(10, 1);
       assert.equal(galvanizeSports.inventory[0].quantityAvailable, 2, "Item 1 should be removed from the available inventory");
@@ -40,15 +40,19 @@ describe("Functions should work", function() {
       galvanizeSports.addItem(18, 1);
       assert.equal(galvanizeSports.inventory[2].quantityAvailable, 6, "Item 3 should be removed from the available inventory");
     });
-    xit("when requested quantity is greater than available inventory, remaining inventory is added to cart", function () {
+    it("when requested quantity is greater than available inventory, remaining inventory is added to cart", function () {
       initializeData();
       galvanizeSports.addItem(10, 50);
       assert.equal(galvanizeSports.shoppingCart[0].quantity, 5, "All available item 1's should be added to the shopping cart");
       assert.equal(galvanizeSports.inventory[0].quantityAvailable, 0, "All available item 1's should be removed from the available inventory");
     });
   });
+
+
+
+
   describe("#removeItem", function () {
-    xit('should remove items from the cart', function () {
+    it('should remove items from the cart', function () {
       initializeData();
       galvanizeSports.removeItem(10, 1);
       assert.equal(galvanizeSports.shoppingCart[0].quantity, 1, "Item 1 should be removed from the shopping cart");
@@ -62,26 +66,32 @@ describe("Functions should work", function() {
       assert.equal(galvanizeSports.shoppingCart[2].quantity, 1, "Items 3 should be removed from the shopping cart");
       assert.equal(galvanizeSports.inventory[2].quantityAvailable, 8, "Item 3 should be added to the available inventory");
     });
-    xit("number of items removed from cart does not exceed the quantity of items actually in the cart", function () {
+    it("number of items removed from cart does not exceed the quantity of items actually in the cart", function () {
       galvanizeSports.removeItem(10, 50);
       assert.equal(galvanizeSports.shoppingCart[0].quantity, 0, "All available item 1's should be removed from the shopping cart");
       assert.equal(galvanizeSports.inventory[0].quantityAvailable, 5, "All available item 1's should be added to the available inventory")
     })
   });
+
+
   describe("#getCheckoutSubtotal", function () {
-    xit("Calculates the subtotal", function(){
+    it("Calculates the subtotal", function(){
       initializeData();
       assert.equal(galvanizeSports.getCheckoutSubtotal(), 299.96, "Calculates correct subtotal");
     });
   });
+
+
   describe("#getTax", function () {
-    xit("should calculate tax", function(){
+    it("should calculate tax", function(){
       initializeData();
       assert.equal(galvanizeSports.getTax(300, 0.078), 23.40, "Calculates correct tax");
     });
   });
+
+
   describe("#getCheckoutTotal", function () {
-    xit("should have a working getCheckoutTotal function", function(){
+    it("should have a working getCheckoutTotal function", function(){
       initializeData();
       assert.equal(galvanizeSports.getCheckoutTotal(), 323.36, "Calculates correct total");
     });
@@ -89,7 +99,7 @@ describe("Functions should work", function() {
 });
 
 describe("User workflow should work", function() {
-  xit("should allow the user to add and remove some items, then display the correct total", function(){
+  it("should allow the user to add and remove some items, then display the correct total", function(){
       initializeData();
       galvanizeSports.addItem(10, 2);
       galvanizeSports.addItem(15, 2);
